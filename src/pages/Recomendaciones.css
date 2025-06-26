@@ -1,0 +1,308 @@
+/* src/pages/Recomendaciones.css */
+
+/* ============================= */
+/* Contenedor principal y efectos */
+/* ============================= */
+.recomendaciones-page {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(110deg, #101820 0%, #081a2e 60%, #000 100%);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  box-shadow: inset 0 0 100px 20px rgba(0,0,0,0.7);
+  overflow-x: hidden;
+}
+
+.recomendaciones-page::before {
+  content: "";
+  position: absolute;
+  top: 18%;
+  left: 10%;
+  width: 320px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(0,160,255,0.23) 0%, rgba(10,24,32,0) 70%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.recomendaciones-page::after {
+  content: "";
+  position: absolute;
+  bottom: 12%;
+  right: 13%;
+  width: 280px;
+  height: 190px;
+  background: radial-gradient(circle, rgba(0,120,255,0.18) 0%, rgba(0,0,0,0) 75%);
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+/* ========== NAVBAR ========== */
+.recomendaciones-page .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #000;
+  padding: 10px 20px;
+}
+
+.recomendaciones-page .navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffcc00;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+/* Ajustes de la barra de navegación */
+.recomendaciones-page .nav-links {
+  display: flex;
+  gap: 1.5rem;       
+  margin: 0;
+  padding: 0;
+}
+
+.recomendaciones-page .nav-links li a {
+  color: #00aaff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color .2s;
+}
+
+.recomendaciones-page .nav-links li a:hover {
+  color: #ffcc00;
+}
+
+/* ========== MAIN CONTENT ========== */
+.recomendaciones-page .main-content {
+  text-align: center;
+  padding: 20px;
+}
+
+.recomendaciones-page .main-content h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+/* ========== GRID DE TARJETAS ========== */
+.recomendaciones-page .movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+  gap: 15px;
+  padding: 0 20px 30px;
+}
+
+/* animación inicial en cascada */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.recomendaciones-page .movies-grid .movie-card {
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform-origin: center bottom;
+  animation: fadeInUp .6s ease forwards;
+}
+
+.recomendaciones-page .movies-grid .movie-card:nth-child(odd)  { animation-delay: 0.1s; }
+.recomendaciones-page .movies-grid .movie-card:nth-child(even) { animation-delay: 0.2s; }
+
+/* IMAGEN */
+.recomendaciones-page .movie-card img {
+  width: 100%;
+  display: block;
+}
+
+/* INFO SOLO AL HOVER */
+.recomendaciones-page .movie-card .card-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.8);
+  padding: 8px;
+  text-align: center;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform .3s ease, opacity .3s ease;
+}
+
+.recomendaciones-page .movie-card:hover .card-info {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* solo el poster visible siempre */
+.recomendaciones-page .movie-card:hover img {
+  transform: scale(1.02);
+  transition: transform .3s ease;
+}
+
+/* ========== HOVER 3D Y OVERLAY ========= */
+.recomendaciones-page .movie-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+
+.recomendaciones-page .movie-card:hover::before {
+  opacity: 1;
+}
+
+.recomendaciones-page .movie-card:hover {
+  transform: scale(1.00) rotateY(5deg);
+  box-shadow: 0 12px 30px rgba(255,255,255,0.2);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+/* ========== NO RESULTS ========== */
+.recomendaciones-page .no-results {
+  text-align: center;
+  color: #ccc;
+  padding: 20px;
+}
+
+/* ========== MODAL ========== */
+@keyframes fadeIn { from {opacity:0} to {opacity:1} }
+@keyframes slideDown { from {transform:translateY(-20px);opacity:0} to {transform:translateY(0);opacity:1} }
+
+.recomendaciones-page .modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  animation: fadeIn .25s ease-out;
+}
+
+.recomendaciones-page .modal-content {
+  background: #111;
+  border-radius: 10px;
+  position: relative;
+  overflow: visible;
+  animation: slideDown .3s ease-out;
+}
+
+.recomendaciones-page .modal-content.horizontal {
+  display: flex;
+  max-width: 80vw;
+  max-height: 70vh;
+  border: 2px solid #00aaff;
+  animation: borderPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes borderPulse {
+  0%,100% { box-shadow: 0 0 8px #00aaff; }
+  50%     { box-shadow: 0 0 20px #00aaff; }
+}
+
+.recomendaciones-page .modal-body {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.recomendaciones-page .modal-poster {
+  width: 200px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.recomendaciones-page .modal-details {
+  overflow-y: auto;
+  max-height: 70vh;
+  color: #eee;
+}
+
+.recomendaciones-page .modal-close {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: transparent;
+  color: #ffcc00;
+  border: none;
+  font-size: 1.5rem;
+  padding: 4px;
+  cursor: pointer;
+  transition: color .2s, transform .2s;
+  z-index: 10;
+}
+
+.recomendaciones-page .modal-close:hover {
+  color: #fff;
+  transform: scale(1.2);
+}
+
+/* ========== ACTORES (CHIPS) ========== */
+.recomendaciones-page .actors-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.recomendaciones-page .actor-chip {
+  background: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: .85rem;
+}
+
+/* Dropdown container */
+.recomendaciones-page .dropdown {
+  position: relative;
+}
+
+/* Botón perfil/logout */
+.recomendaciones-page .profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: #00aaff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.recomendaciones-page .profile-btn span {
+  color: #ffcc00;
+}
+.recomendaciones-page .profile-btn:hover {
+  color: #008ecf;
+}
+
+/* Menú desplegable */
+.recomendaciones-page .dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: #222;
+  border-radius: 6px;
+  padding: 0.5rem 0;
+  list-style: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+.recomendaciones-page .dropdown-menu li {
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  color: #fff;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.recomendaciones-page .dropdown-menu li:hover {
+  background: #00aaff;
+}

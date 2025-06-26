@@ -1,0 +1,345 @@
+/* src/pages/Comunidad.css */
+
+.comunidad-container {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(110deg, #101820 0%, #081a2e 60%, #000 100%);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #000;
+  padding: 10px 20px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  color: #00aaff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: #ffcc00;
+}
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: #00aaff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.profile-btn span {
+  color: #ffcc00;
+}
+.profile-btn:hover {
+  color: #008ecf;
+}
+
+.main-content h2 {
+  text-align: center;
+  margin: 40px 0 20px;
+}
+
+/* grid de películas */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.movie-thumb {
+  cursor: pointer;
+  border: 3px solid transparent;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.2s ease;
+}
+.movie-thumb img {
+  width: 100%;
+  display: block;
+}
+.movie-thumb p {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  text-align: center;
+}
+.movie-thumb:hover {
+  border-color: #ffcc00;
+  transform: scale(1.05);
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+@keyframes pulse {
+  from {
+    box-shadow: 0 0 5px #ffcc00;
+  }
+  to {
+    box-shadow: 0 0 15px #ffcc00;
+  }
+}
+@keyframes tilt {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.05) rotate(-2deg); }
+  100% { transform: scale(1.03) rotate(0deg); }
+}
+
+/* sección comentarios generales */
+.general-comments-section {
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 40px auto;
+  max-width: 800px;
+  animation: fadeIn 0.4s ease-out;
+}
+.general-comments-section h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #ffcc00;
+  text-align: center;
+}
+
+/* sección comentarios por película */
+.movie-comments-section {
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 40px auto;
+  max-width: 800px;
+  animation: fadeIn 0.4s ease-out;
+}
+.movie-comments-section h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #ffcc00;
+  text-align: center;
+}
+
+/* lista de comentarios */
+.comments-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.comment-card {
+  background: rgba(255,255,255,0.05);
+  padding: 12px;
+  border-radius: 8px;
+  text-align: left;
+  animation: fadeInLeft 0.4s ease-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.comment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(255,255,255,0.2);
+  animation: pulseHighlight 0.6s ease-in-out;
+}
+
+/* Keyframes para un flash de fondo suave */
+@keyframes pulseHighlight {
+  0%   { background-color: rgba(255,255,255,0.05); }
+  50%  { background-color: rgba(255,255,255,0.15); }
+  100% { background-color: rgba(255,255,255,0.05); }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.comment-movie-poster {
+  width: 60px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+.username {
+  font-weight: bold;
+  color: #ffcc00;
+}
+.movie-title {
+  font-style: italic;
+  color: #e0e0e0;
+}
+.rating {
+  display: flex;
+  gap: 2px;
+}
+.star {
+  font-size: 1rem;
+  color: #555;
+  transition: transform 0.2s, color 0.2s;
+}
+.star:hover {
+  transform: scale(1.2);
+}
+.star.selected {
+  color: #ffcc00;
+}
+.comment-text {
+  color: #e0e0e0;
+  line-height: 1.3;
+}
+.no-comments {
+  color: #888;
+  font-style: italic;
+}
+
+/* formulario comentario por película */
+.comment-form {
+  text-align: left;
+  margin-bottom: 30px;
+}
+.rating-input {
+  margin-bottom: 10px;
+}
+.comment-form textarea {
+  width: 100%;
+  height: 70px;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  resize: none;
+  margin-bottom: 10px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+.comment-form button {
+  background: #ffcc00;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.login-msg {
+  color: #ffa500;
+  margin: 16px 0;
+}
+
+/* animaciones generales */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* dropdown perfil/logout */
+.dropdown {
+  position: relative;
+}
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: #222;
+  border-radius: 6px;
+  padding: 0.5rem 0;
+  list-style: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+.dropdown-menu li {
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  color: #fff;
+  transition: background 0.2s;
+}
+.dropdown-menu li:hover {
+  background: #00aaff;
+}
+
+/* modal overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.modal-overlay.open {
+  display: flex;
+}
+
+/* modal content con borde neón */
+.modal-content {
+  background: #081a2e;
+  padding: 20px;
+  border-radius: 8px;
+  border: 3px solid;
+  border-image: linear-gradient(45deg,#00aaff,#00ddff,#00aaff,#00ddff) 1;
+  animation: neonBorder 3s linear infinite alternate;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  position: relative;
+}
+@keyframes neonBorder {
+  to {
+    border-image-source: linear-gradient(225deg,#00ddff,#00aaff,#00ddff);
+  }
+}
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.modal-poster {
+  width: 150px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+.modal-cast {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.modal-cast li {
+  background: rgba(255,255,255,0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}

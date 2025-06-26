@@ -1,0 +1,175 @@
+/* ---------------------- */
+/* Contenedor general     */
+/* ---------------------- */
+.tus-listas-container {
+  min-height: 100vh;
+  background: linear-gradient(110deg, #101820 0%, #081a2e 60%, #000 100%);
+  color: #eee;
+  font-family: Arial, sans-serif;
+}
+
+/* ---------------------- */
+/* NAVBAR                */
+/* ---------------------- */
+.navbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 10px 20px;
+  background: rgba(0,0,0,0.8);
+}
+.navbar .logo {
+  font-size: 1.5rem;
+  color: #ffcc00;
+}
+.nav-links {
+  display: flex;
+  gap: 12px;
+}
+.nav-links a,
+.nav-links button {
+  color: #00aaff;
+  background: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover,
+.nav-links button:hover {
+  color: #ffcc00;
+}
+
+/* ---------------------- */
+/* BOTÓN VOLVER          */
+/* ---------------------- */
+.back-btn {
+  margin: 20px;
+  background: #00aaff;
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.back-btn:hover {
+  background: #008ecf;
+}
+
+/* ---------------------- */
+/* ENCABEZADOS           */
+/* ---------------------- */
+.tus-listas-container h2 {
+  margin: 0 20px 12px;
+  font-size: 1.8rem;
+  color: #ffcc00;
+}
+.lista {
+  margin: 20px;
+}
+.lista h3 {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  color: #00aaff;
+  border-bottom: 2px solid #00aaff;
+  padding-bottom: 4px;
+}
+.lista p {
+  margin: 12px 0;
+  color: #888;
+  font-style: italic;
+}
+
+/* ---------------------- */
+/* GRID DE TARJETAS       */
+/* ---------------------- */
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(140px,1fr));
+  gap: 16px;
+}
+
+/* ---------------------- */
+/* TARJETA + ANIMACIÓN    */
+/* ---------------------- */
+.movie-card {
+  position: relative;
+  background: #222;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+  border: 2px solid transparent;
+}
+.movie-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+  border-color: #00aaff;
+}
+
+.movie-card img {
+  width: 100%;
+  display: block;
+}
+
+/* ---------------------- */
+/* OVERLAY INFORMACIÓN    */
+/* ---------------------- */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 12px;
+  transition: opacity 0.3s;
+}
+.movie-card:hover .overlay {
+  opacity: 1;
+}
+
+.overlay h4 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+/* ---------------------- */
+/* BOTONES OVERLAY        */
+/* ---------------------- */
+.overlay-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.overlay-buttons button {
+  flex: 1;
+  background: #00aaff;
+  border: none;
+  color: #fff;
+  padding: 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.overlay-buttons button:hover {
+  background: #ffcc00;
+}
+
+/* ---------------------- */
+/* RESPONSIVE             */
+/* ---------------------- */
+@media (max-width: 600px) {
+  .movie-list {
+    grid-template-columns: repeat(auto-fill,minmax(120px,1fr));
+  }
+}

@@ -1,0 +1,357 @@
+/* ------------------------ */
+/* GLOBAL                   */
+/* ------------------------ */
+body {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  background: #000;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.peliculas-page {
+  min-height: 100vh;
+  background: linear-gradient(110deg, #101820 0%, #081a2e 60%, #000 100%);
+  box-shadow: inset 0 0 100px 20px rgba(0, 0, 0, 0.7);
+}
+
+/* ------------------------ */
+/* NAVBAR                   */
+/* ------------------------ */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 0, 0, 0.8);
+}
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffcc00;
+}
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.nav-links a {
+  color: #00aaff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+.nav-links a:hover {
+  color: #ffcc00;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.profile-btn,
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #00aaff;
+  border: none;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.profile-btn:hover,
+.logout-btn:hover {
+  background: #008ecf;
+}
+
+/* ------------------------ */
+/* SEARCH + MIS LISTAS      */
+/* ------------------------ */
+.search-and-lists {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+}
+.search-container {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+.search-bar {
+  width: 80%;
+  padding: 0.5rem 1rem;
+  padding-right: 3rem; /* espacio para el icono */
+  border-radius: 30px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: rgba(8, 197, 245, 0.2);
+  color: #fff;
+  font-size: 0.9rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: #00aaff;
+  box-shadow: 0 0 8px rgba(0, 170, 255, 0.6);
+}
+
+.search-icon {
+  position: absolute;
+  top: 50% !important;
+  right: 8px !important;
+  transform: translateY(-70%) !important;
+  background: transparent !important;
+}
+
+.search-icon:hover,
+.search-icon:focus,
+.search-icon:active {
+  transform: translateY(-50%) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.listas-btn-outside {
+  margin-left: auto;
+  background: #00aaff;
+  border: none;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.listas-btn-outside:hover {
+  background: #008ecf;
+}
+
+/* ------------------------ */
+/* GÉNEROS (5 en fila)     */
+/* ------------------------ */
+.genre-scroll {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+}
+.genre-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0.5rem;
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.genre-btn:hover,
+.genre-btn.active {
+  background: #ffcc00;
+  color: #000;
+  transform: scale(1.05);
+}
+.genre-icon {
+  transition: transform 0.3s;
+}
+.genre-btn:hover .genre-icon {
+  transform: rotate(20deg);
+}
+
+/* ------------------------ */
+/* LISTA DE PELÍCULAS       */
+/* ------------------------ */
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 1rem 1.5rem 2rem;
+}
+.movie-card {
+  position: relative;
+  background: #222;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+.movie-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+}
+.movie-card img {
+  width: 100%;
+  display: block;
+}
+.card-info {
+  padding: 0.5rem;
+  padding-bottom: 2.5rem; /* deja espacio para los iconos abajo */
+}
+.card-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #fff;
+}
+.card-info p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #ccc;
+}
+
+/* ------------------------ */
+/* ÍCONOS FAVORITO/PENDIENTE*/
+/* ------------------------ */
+.icon-container {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.75rem;
+}
+.favorite-btn,
+.pending-btn {
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 50%;
+  padding: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.favorite-btn:hover,
+.pending-btn:hover {
+  background: #ffcc00;
+  color: #000;
+}
+.favorite-btn.active i { color: #ff4081; }
+.pending-btn.active i  { color: #ffcc00; }
+
+/* ------------------------ */
+/* MODAL DETAILS            */
+/* ------------------------ */
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to   { opacity: 1 }
+}
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0 }
+  to   { transform: translateY(0); opacity: 1 }
+}
+@keyframes neonBorder {
+  0% {
+    border-color: #00aaff;
+    box-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff, 0 0 20px #00aaff;
+  }
+  50% {
+    border-color: #ffcc00;
+    box-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 20px #ffcc00;
+  }
+  100% {
+    border-color: #00aaff;
+    box-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff, 0 0 20px #00aaff;
+  }
+}
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn .25s ease-out;
+}
+.modal-content,
+.modal-content.horizontal {
+  background: #111;
+  border-radius: 10px;
+  overflow: visible;
+  border: 2px solid transparent;
+  animation: slideDown .3s ease-out, neonBorder 1.5s infinite;
+  display: flex;
+  max-width: 80vw;
+  max-height: 70vh;
+}
+.modal-body {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+.modal-poster {
+  width: 200px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+.modal-details {
+  color: #eee;
+  overflow-y: auto;
+  max-height: 70vh;
+}
+.modal-close {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: transparent;
+  color: #ffcc00;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.modal-close:hover {
+  transform: scale(1.2);
+}
+
+/* ------------------------ */
+/* ACTORES (CHIPS)          */
+/* ------------------------ */
+.actors-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.actor-chip {
+  background: #333;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+/* contenedor relativo para el dropdown */
+.dropdown {
+  position: relative;
+}
+
+/* menú desplegable */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: #222;
+  border-radius: 6px;
+  padding: 0.5rem 0;
+  list-style: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+/* cada opción */
+.dropdown-menu li {
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  color: #fff;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.dropdown-menu li:hover {
+  background: #00aaff;
+}

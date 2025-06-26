@@ -1,0 +1,86 @@
+/* Global */
+.pd-page {
+  min-height: 100vh;
+  background: linear-gradient(110deg, #101820 0%, #081a2e 60%, #000 100%);
+  color: #eee;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Botón volver */
+.pd-back {
+  background: #00aaff;
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background 0.2s;
+}
+.pd-back:hover {
+  background: #008ecf;
+}
+
+/* Contenedor flex */
+.pd-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Poster */
+.pd-poster {
+  width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* Info */
+.pd-info {
+  flex: 1;
+  background: #111;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  overflow-y: auto;
+}
+
+/* Borde de neón animado */
+@keyframes neonBorder {
+  0% {
+    border-color: #00aaff;
+    box-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff, 0 0 20px #00aaff;
+  }
+  50% {
+    border-color: #ffcc00;
+    box-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 20px #ffcc00;
+  }
+  100% {
+    border-color: #00aaff;
+    box-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff, 0 0 20px #00aaff;
+  }
+}
+
+.neon-border {
+  border: 2px solid transparent;
+  animation: neonBorder 1.5s infinite;
+}
+
+/* Casting */
+.pd-cast {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+.pd-cast li {
+  margin-bottom: 4px;
+}
+
+/* Loading */
+.pd-loading {
+  color: #fff;
+  text-align: center;
+  margin-top: 100px;
+  font-size: 1.2rem;
+}
