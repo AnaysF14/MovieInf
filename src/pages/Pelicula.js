@@ -37,7 +37,7 @@ const Pelicula = () => {
           src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
           alt={movie.title}
         />
-        <div className="pd-info neon-border">
+      <div className="pd-info dynamic-border">
           <h2>
             {movie.title}
             {movie.release_date && ` (${movie.release_date.slice(0,4)})`}

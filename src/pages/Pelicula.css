@@ -30,11 +30,12 @@
   align-items: flex-start;
 }
 
-/* Poster */
+/* Aplicar el movimiento sutil a la imagen */
 .pd-poster {
   width: 300px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  animation: moveImage 3s ease-in-out infinite; /* Aplica el movimiento */
 }
 
 /* Info */
@@ -47,25 +48,44 @@
   overflow-y: auto;
 }
 
-/* Borde de neón animado */
-@keyframes neonBorder {
+/* Animación de borde pulsante con movimiento arriba y abajo */
+@keyframes dynamicBorder {
   0% {
-    border-color: #00aaff;
-    box-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff, 0 0 20px #00aaff;
+    transform: translateY(0);
+    border-color: #00aaff; /* Azul */
+    box-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff, 0 0 30px #00aaff, 0 0 40px #00aaff;
   }
   50% {
-    border-color: #ffcc00;
-    box-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 20px #ffcc00;
+    transform: translateY(-10px); /* Movimiento hacia arriba */
+    border-color: #ffcc00; /* Dorado */
+    box-shadow: 0 0 20px #ffcc00, 0 0 30px #ffcc00, 0 0 40px #ffcc00, 0 0 50px #ffcc00;
   }
   100% {
-    border-color: #00aaff;
-    box-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff, 0 0 20px #00aaff;
+    transform: translateY(0); /* Vuelve a la posición original */
+    border-color: #00aaff; /* Azul */
+    box-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff, 0 0 30px #00aaff, 0 0 40px #00aaff;
   }
 }
 
-.neon-border {
-  border: 2px solid transparent;
-  animation: neonBorder 1.5s infinite;
+/* Animación de la imagen moviéndose de arriba a abajo */
+@keyframes moveImage {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px); /* Mover la imagen hacia arriba */
+  }
+  100% {
+    transform: translateY(0); /* Vuelve a la posición original */
+  }
+}
+
+.dynamic-border {
+  border: 2px solid #00aaff; /* Azul inicial */
+  animation: dynamicBorder 3s ease-in-out infinite; 
+  padding: 20px;
+  background-color: #111; 
+  border-radius: 8px;
 }
 
 /* Casting */

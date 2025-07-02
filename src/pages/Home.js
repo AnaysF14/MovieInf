@@ -23,15 +23,15 @@ const carouselImages = [
 
 const Home = () => {
   const navigate = useNavigate()
-  const [username, setUsername]     = useState("")
+  const [username, setUsername] = useState("")
   const [showLogout, setShowLogout] = useState(false)
   const isLoggedIn = Boolean(username)
 
   const [current, setCurrent] = useState(0)
   const timeoutRef = useRef(null)
 
-  const [upcoming, setUpcoming] = useState([])
-  const notifiedRef = useRef([])
+  const [upcoming, setUpcoming] = useState([]) // Películas próximas
+  const notifiedRef = useRef([]) // Para evitar notificar varias veces la misma película
 
   // 1) Obtener usuario
   useEffect(() => {
@@ -68,45 +68,79 @@ const Home = () => {
     return () => window.removeEventListener("click", h)
   }, [showLogout])
 
-  // 4) Cargar estrenos futuros (>= hoy y año ≥ 2025)
-  useEffect(() => {
-    fetchUpcomingMovies()
-      .then(arr => {
-        const hoy = new Date()
-        const filt = arr
-          .filter(m => {
-            const rd = new Date(m.release_date)
-            return rd >= hoy && rd.getFullYear() >= 2025
-          })
-          .sort((a, b) => new Date(a.release_date) - new Date(b.release_date))
-        setUpcoming(filt)
-      })
-      .catch(console.error)
-  }, [])
-
-  // 5) Notificar estrenos a ≤ 3 días con SweetAlert
-  useEffect(() => {
-    const hoy = new Date()
-    upcoming.forEach(m => {
-      if (!m.release_date) return
-      const rd = new Date(m.release_date)
-      const diff = (rd - hoy) / (1000 * 60 * 60 * 24)
-      if (diff > 0 && diff <= 3 && !notifiedRef.current.includes(m.id)) {
-        Swal.fire({
-          icon: "info",
-          title: `Próximo estreno`,
-          text: `${m.title} se estrena el ${m.release_date}`,
-          position: "top-end",
-          toast: true,
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          background: "#333",
-          color: "#fff"
+useEffect(() => {
+  fetchUpcomingMovies()
+    .then(arr => {
+      console.log("Películas obtenidas:", arr); // Debugging: Verificando las películas obtenidas
+      const hoy = new Date();
+      const filt = arr
+        .filter(m => {
+          const rd = new Date(m.release_date);
+          return rd >= hoy && rd.getFullYear() >= 2025;
         })
-        notifiedRef.current.push(m.id)
-      }
+        .sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
+      setUpcoming(filt);
     })
+    .catch(console.error);
+}, []);
+
+useEffect(() => {
+  console.log("Películas en `upcoming`:", upcoming); // Debugging: Verificando las películas en `upcoming`
+
+  const hoy = new Date();
+  upcoming.forEach(m => {
+    if (!m.release_date) return;
+
+    const rd = new Date(m.release_date);
+    const diff = Math.floor((rd - hoy) / (1000 * 60 * 60 * 24));
+
+    console.log(`Película: ${m.title} - Días hasta el estreno: ${diff}`); // Debugging: Verificando la diferencia de días
+
+    if (diff > 0 && diff <= 3 && !notifiedRef.current.includes(m.id)) {
+      console.log("Mostrando notificación para:", m.title); // Debugging: Verificando si se mostrará la notificación
+      Swal.fire({
+        icon: "info",
+        title: `Próximo estreno`,
+        text: `${m.title} se estrena el ${m.release_date}`,
+        position: "center", // Usamos "center" en lugar de "top-end"
+        toast: false, // Desactivamos el modo "toast"
+        showConfirmButton: true, // Añadimos el botón de confirmación
+        timer: 5000, // Hacemos la notificación visible por 5 segundos
+        background: "#333",
+        color: "#fff"
+      });
+      notifiedRef.current.push(m.id);
+    }
+  });
+}, [upcoming]);
+
+  // 6) Notificar de nuevas películas siempre que el componente cargue
+  useEffect(() => {
+    if (upcoming.length > 0) {
+      const hoy = new Date()
+      console.log("Verificando películas para notificar...") // Debugging: Verificando ejecución de este efecto
+      upcoming.forEach(m => {
+        if (!m.release_date) return
+        const rd = new Date(m.release_date)
+        const diff = (rd - hoy) / (1000 * 60 * 60 * 24)
+        console.log(`Película: ${m.title} - Días hasta el estreno: ${diff}`) // Debugging: Verificando la diferencia de días
+        if (diff > 0 && diff <= 3 && !notifiedRef.current.includes(m.id)) {
+          Swal.fire({
+            icon: "info",
+            title: `Nueva película`,
+            text: `${m.title} se estrena el ${m.release_date}`,
+            position: "top-end",
+            toast: true,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            background: "#333",
+            color: "#fff"
+          })
+          notifiedRef.current.push(m.id)
+        }
+      })
+    }
   }, [upcoming])
 
   return (
@@ -171,20 +205,7 @@ const Home = () => {
             &gt;
           </button>
         </div>
-        <div className="carousel-dots">
-          {carouselImages.map((_, idx) => (
-            <span
-              key={idx}
-              className={`dot ${idx === current ? "active" : ""}`}
-              onClick={() => setCurrent(idx)}
-            />
-          ))}
-        </div>
 
-        <div className="welcome right">
-          <h3>¡Explora el mundo del cine!</h3>
-          <p>Déjate sorprender</p>
-        </div>
         <div className="movie-images">
           <img src={pelicula1} alt="Película 1" />
           <button className="go-movies" onClick={() => navigate("/peliculas")}>
@@ -201,7 +222,7 @@ const Home = () => {
           </div>
           <div className="calendar-list">
             {upcoming.map(m => {
-              const rd  = new Date(m.release_date)
+              const rd = new Date(m.release_date)
               const dow = rd.getDay()
               const col = dow === 0 ? 7 : dow
               return (
