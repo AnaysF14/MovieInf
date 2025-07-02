@@ -2,15 +2,16 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "react-scripts": "^5.0.1",  
+  "react-scripts": "^5.0.1",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "mysql2": "^3.14.1"
-  },                   
-"scripts": {
-  "start:api": "json-server --watch db.json --port 5001"
-}
+    "mysql2": "^3.14.1",
+    "react-scripts": "^5.0.1"
+  },
+  "scripts": {
+    "start:api": "json-server --watch db.json --port 5001"
+  }
 }
