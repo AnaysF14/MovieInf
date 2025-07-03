@@ -30,6 +30,22 @@
       "rating": 5,
       "text": "Me encanta",
       "date": "2025-07-03T06:26:58.292Z"
+    },
+    {
+      "id": "47ff",
+      "movieId": 1011985,
+      "user": "Erika",
+      "rating": 1,
+      "text": "EW",
+      "date": "2025-07-03T16:46:47.844Z"
+    },
+    {
+      "id": "f1be",
+      "movieId": 568770,
+      "user": "Erika",
+      "rating": 4,
+      "text": "Buena",
+      "date": "2025-07-03T17:21:53.636Z"
     }
   ]
 }

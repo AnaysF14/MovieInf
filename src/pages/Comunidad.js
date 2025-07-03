@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchAllMovies, fetchMovieDetails } from "../api/PeliculasAPI";
 import "./Comunidad.css";
 
-const API = process.env.REACT_APP_API || "http://localhost:5001";
+const API = process.env.REACT_APP_API_URL || "http://localhost:5001";
 
 const Comunidad = () => {
   const navigate = useNavigate();
@@ -34,10 +34,15 @@ const Comunidad = () => {
   // carga películas y todos los comentarios
   useEffect(() => {
     fetchAllMovies().then(setMovies).catch(console.error);
+  }, []);
+
+  useEffect(() => {
     if (selectedMovie) {
       fetch(`${API}/comments/${selectedMovie.id}`)
         .then((res) => res.json())
-        .then(setComments)
+        .then((data) => {
+          setComments(data);  // Cargar los comentarios correspondientes
+        })
         .catch(console.error);
     }
   }, [selectedMovie]);
@@ -82,6 +87,7 @@ const Comunidad = () => {
         body: JSON.stringify(entry),
       });
       const saved = await res.json();
+      // Agregar el nuevo comentario al estado
       setComments([saved, ...comments]);
       setNewComment("");
       setNewRating(0);

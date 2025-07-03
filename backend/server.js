@@ -12,9 +12,9 @@ app.use(express.json());
 
 // Configuración de la base de datos MySQL
 const db = mysql.createConnection({
-  host: 'localhost',  
-  user: 'root',     
-  password: '061213',      
+  host: 'localhost',
+  user: 'root',
+  password: '061213',
   database: 'movieinf'
 });
 
@@ -85,7 +85,7 @@ app.get('/api/peliculas', (req, res) => {
     if (err) {
       return res.status(500).json({ message: 'Error al obtener las películas' });
     }
-    res.status(200).json(results);  // Asegúrate de que los resultados incluyan la sinopsis
+    res.status(200).json(results);
   });
 });
 
@@ -116,12 +116,11 @@ app.post('/comments', (req, res) => {
 // Ruta para obtener comentarios de una película
 app.get('/comments/:movieId', (req, res) => {
   const { movieId } = req.params;
-
   db.query('SELECT * FROM comentarios WHERE movieId = ?', [movieId], (err, results) => {
     if (err) {
       return res.status(500).json({ message: 'Error al obtener los comentarios' });
     }
-    res.status(200).json(results);  // Devuelve los comentarios de esa película
+    res.status(200).json(results);
   });
 });
 
