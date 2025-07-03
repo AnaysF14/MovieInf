@@ -4,8 +4,15 @@ const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const app = express();
 
-// Habilitar CORS para permitir solicitudes desde cualquier origen
-app.use(cors());
+// Configuración de CORS
+const corsOptions = {
+  origin: 'https://movieinf.vercel.app',  // Asegúrate de agregar tu dominio de frontend aquí
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type',
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 
 // Middleware para parsear el cuerpo de las solicitudes
 app.use(express.json());
