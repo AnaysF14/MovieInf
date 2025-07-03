@@ -58,8 +58,6 @@
   "main": "index.js",
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "proxy": "https://movieinf-production.up.railway.app"
-
+  "license": "ISC"
 }
 
