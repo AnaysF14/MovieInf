@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
@@ -11,12 +10,9 @@ app.use(cors());
 // Middleware para parsear el cuerpo de las solicitudes
 app.use(express.json());
 
-// Configuración de la base de datos MySQL
+// Configuración de la base de datos MySQL utilizando variables de entorno
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '061213', // Asegúrate de usar tu contraseña correcta
-  database: 'movieinf'
+  uri: process.env.MYSQL_URL,  // Usamos la variable de entorno MYSQL_URL
 });
 
 // Conectar a la base de datos
