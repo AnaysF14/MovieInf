@@ -1,4 +1,3 @@
-// src/pages/Comunidad.js
 import React, { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
@@ -31,22 +30,24 @@ const Comunidad = () => {
     return () => window.removeEventListener("click", handler);
   }, [showLogout]);
 
-  // carga películas y todos los comentarios
+  // Carga películas y todos los comentarios
   useEffect(() => {
     fetchAllMovies().then(setMovies).catch(console.error);
+    
+    // Carga todos los comentarios al inicio
+    fetch(`${API}/comments`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setComments(data);  // Aseguramos que sea un arreglo
+        } else {
+          setComments([]); // Si no es un arreglo, vacía el estado de comentarios
+        }
+      })
+      .catch(console.error);
   }, []);
 
-  useEffect(() => {
-    if (selectedMovie) {
-      fetch(`${API}/comments/${selectedMovie.id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setComments(data);  // Cargar los comentarios correspondientes
-        })
-        .catch(console.error);
-    }
-  }, [selectedMovie]);
-
+  // Maneja el envío de un nuevo comentario
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!newComment || newRating === 0) {
@@ -87,8 +88,7 @@ const Comunidad = () => {
         body: JSON.stringify(entry),
       });
       const saved = await res.json();
-      // Agregar el nuevo comentario al estado
-      setComments([saved, ...comments]);
+      setComments([saved, ...comments]);  // Actualiza la lista de comentarios
       setNewComment("");
       setNewRating(0);
       Swal.fire({
@@ -103,7 +103,7 @@ const Comunidad = () => {
     }
   };
 
-  // comentarios de la peli seleccionada
+  // Filtra los comentarios de la película seleccionada
   const filtered = selectedMovie
     ? comments.filter((c) => c.movieId === selectedMovie.id)
     : [];
@@ -182,7 +182,7 @@ const Comunidad = () => {
           ))}
         </div>
 
-        {/* Todos los comentarios (debajo del grid) */}
+        {/* Todos los comentarios */}
         <section className="all-comments-section">
           <h3>Todos los comentarios</h3>
           <div className="comments-list">
@@ -219,7 +219,7 @@ const Comunidad = () => {
           </div>
         </section>
 
-        {/* Sección de comentario para la película seleccionada */}
+        {/* Comentarios para la película seleccionada */}
         {selectedMovie && (
           <section className="comments-section">
             <h3>Comenta en {selectedMovie.title}</h3>
