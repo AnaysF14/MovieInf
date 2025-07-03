@@ -1,35 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { MdVisibility, MdVisibilityOff } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import "./Perfil.css";
+// src/pages/Perfil.js
+import React, { useState, useEffect } from "react"
+import { MdVisibility, MdVisibilityOff } from "react-icons/md"
+import { useNavigate } from "react-router-dom"
+import Swal from "sweetalert2"
+import "./Perfil.css"
 
 const Perfil = () => {
-  const nav = useNavigate();
-  const API_URL = 'https://movieinf-production.up.railway.app/'; // Usar HTTPS aquí
+  const nav = useNavigate()
 
-  // Formularios
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [newUsername, setNewUsername] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
+  // formularios
+  const [username, setUsername]       = useState("")
+  const [password, setPassword]       = useState("")
+  const [newUsername, setNewUsername] = useState("")
+  const [newPassword, setNewPassword] = useState("")
+  const [email, setEmail]             = useState("")
+  const [isRegistering, setIsRegistering] = useState(false)
+  const [showPassword, setShowPassword]     = useState(false)
+  const [showNewPassword, setShowNewPassword] = useState(false)
 
-  // Login state
+  // login state
   const [isLoggedIn, setIsLoggedIn] = useState(
     Boolean(localStorage.getItem("token"))
-  );
+  )
 
-  // Precargo username si ya hay token
+  // precargo username si ya hay token
   useEffect(() => {
     if (isLoggedIn) {
-      const usr = localStorage.getItem("username");
-      if (usr) setUsername(usr);
+      const usr = localStorage.getItem("username")
+      if (usr) setUsername(usr)
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn])
 
   const alert = (msg, type) =>
     Swal.fire({
@@ -37,59 +37,59 @@ const Perfil = () => {
       title: type === "error" ? "¡Error!" : "¡Éxito!",
       text: msg,
       confirmButtonColor: type === "error" ? "#ff5733" : "#00aaff"
-    });
+    })
 
   // LOGIN
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = async e => {
+    e.preventDefault()
     try {
-      const res = await fetch(`${API_URL}/login`, {  // URL actualizada con HTTPS
+      const res = await fetch("http://localhost:5000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      const result = await res.json();
+        body: JSON.stringify({ username, password })
+      })
+      const result = await res.json()
       if (res.ok) {
-        localStorage.setItem("username", username);
-        localStorage.setItem("token", result.token || "logged_in");
-        setIsLoggedIn(true);
-        await alert("¡Inicio de sesión exitoso!", "success");
-        nav("/");
+        localStorage.setItem("username", username)
+        localStorage.setItem("token", result.token || "logged_in")
+        setIsLoggedIn(true)
+        await alert("¡Inicio de sesión exitoso!", "success")
+        nav("/")
       } else {
-        alert(result.message || "Credenciales incorrectas.", "error");
+        alert(result.message || "Credenciales incorrectas.", "error")
       }
     } catch {
-      alert("Error conectando al servidor.", "error");
+      alert("Error conectando al servidor.", "error")
     }
-  };
+  }
 
   // REGISTER
-  const handleRegister = async (e) => {
-    e.preventDefault();
+  const handleRegister = async e => {
+    e.preventDefault()
     try {
-      const res = await fetch(`${API_URL}/register`, {  // URL actualizada con HTTPS
+      const res = await fetch("http://localhost:5000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           username: newUsername,
           email,
-          password: newPassword,
-        }),
-      });
-      const result = await res.json();
+          password: newPassword
+        })
+      })
+      const result = await res.json()
       if (res.ok) {
-        localStorage.setItem("username", newUsername);
-        localStorage.setItem("token", result.token || "logged_in");
-        setIsLoggedIn(true);
-        await alert("¡Registro exitoso!", "success");
-        nav("/");
+        localStorage.setItem("username", newUsername)
+        localStorage.setItem("token", result.token || "logged_in")
+        setIsLoggedIn(true)
+        await alert("¡Registro exitoso!", "success")
+        nav("/")
       } else {
-        alert(result.message || "Error al registrarte.", "error");
+        alert(result.message || "Error al registrarte.", "error")
       }
     } catch {
-      alert("Error conectando al servidor.", "error");
+      alert("Error conectando al servidor.", "error")
     }
-  };
+  }
 
   // LOGOUT
   const handleLogout = () => {
@@ -98,15 +98,15 @@ const Perfil = () => {
       title: "Sesión cerrada",
       text: "Has cerrado sesión correctamente",
       confirmButtonText: "OK",
-      confirmButtonColor: "#00aaff",
+      confirmButtonColor: "#00aaff"
     }).then(() => {
-      localStorage.removeItem("username");
-      localStorage.removeItem("token");
-      setIsLoggedIn(false);
-      setUsername("");
-      nav("/", { replace: true });
-    });
-  };
+      localStorage.removeItem("username")
+      localStorage.removeItem("token")
+      setIsLoggedIn(false)
+      setUsername("")
+      nav("/", { replace: true })
+    })
+  }
 
   return (
     <div className="home-container">
@@ -142,7 +142,7 @@ const Perfil = () => {
                     type="text"
                     placeholder="Usuario"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={e => setUsername(e.target.value)}
                     required
                   />
                   <div className="password-container">
@@ -150,14 +150,16 @@ const Perfil = () => {
                       type={showPassword ? "text" : "password"}
                       placeholder="Contraseña"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={e => setPassword(e.target.value)}
                       required
                     />
                     <span
                       onClick={() => setShowPassword(!showPassword)}
                       className="eye-icon"
                     >
-                      {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                      {showPassword
+                        ? <MdVisibilityOff />
+                        : <MdVisibility />}
                     </span>
                   </div>
                   <button type="submit">Entrar</button>
@@ -180,7 +182,7 @@ const Perfil = () => {
                     type="text"
                     placeholder="Usuario"
                     value={newUsername}
-                    onChange={(e) => setNewUsername(e.target.value)}
+                    onChange={e => setNewUsername(e.target.value)}
                     required
                   />
                   <div className="password-container">
@@ -188,21 +190,23 @@ const Perfil = () => {
                       type={showNewPassword ? "text" : "password"}
                       placeholder="Contraseña"
                       value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
+                      onChange={e => setNewPassword(e.target.value)}
                       required
                     />
                     <span
                       onClick={() => setShowNewPassword(!showNewPassword)}
                       className="eye-icon"
                     >
-                      {showNewPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                      {showNewPassword
+                        ? <MdVisibilityOff />
+                        : <MdVisibility />}
                     </span>
                   </div>
                   <input
                     type="email"
                     placeholder="Correo"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                     required
                   />
                   <button type="submit">Registrar</button>
@@ -230,7 +234,7 @@ const Perfil = () => {
         )}
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default Perfil;
+export default Perfil

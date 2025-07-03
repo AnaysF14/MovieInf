@@ -4,22 +4,18 @@ const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const app = express();
 
-// Configuración de CORS
-const corsOptions = {
-  origin: 'https://movieinf.vercel.app',  // Asegúrate de agregar tu dominio de frontend aquí
-  methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type',
-  credentials: true
-};
-
-app.use(cors(corsOptions));
+// Habilitar CORS para permitir solicitudes desde cualquier origen
+app.use(cors());
 
 // Middleware para parsear el cuerpo de las solicitudes
 app.use(express.json());
 
-// Configuración de la base de datos MySQL utilizando variables de entorno
+// Configuración de la base de datos MySQL
 const db = mysql.createConnection({
-  uri: process.env.MYSQL_URL,  // Usamos la variable de entorno MYSQL_URL
+  host: 'localhost',  
+  user: 'root',     
+  password: '061213',      
+  database: 'movieinf'
 });
 
 // Conectar a la base de datos
@@ -129,8 +125,7 @@ app.get('/comments/:movieId', (req, res) => {
   });
 });
 
-// Iniciar el servidor en el puerto asignado por Railway (usando el puerto del entorno)
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+// Iniciar el servidor
+app.listen(5000, () => {
+  console.log('Servidor corriendo en el puerto 5000');
 });
