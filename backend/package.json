@@ -9,6 +9,7 @@
     "express": "^5.1.0",
     "mysql2": "^3.14.1",
     "react-scripts": "^5.0.1"
+    
   },
   "scripts": {
     "start:api": "json-server --watch db.json --port 5001"
