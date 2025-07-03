@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchAllMovies, fetchMovieDetails } from "../api/PeliculasAPI";
 import "./Comunidad.css";
 
-const API = process.env.REACT_APP_API_URL || "http://localhost:5001";
+const API = process.env.REACT_APP_API || "http://localhost:5001";
 
 const Comunidad = () => {
   const navigate = useNavigate();
