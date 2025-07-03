@@ -34,7 +34,9 @@ html, body {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 12px;
+  gap: 20px; /* Espaciado entre los enlaces */
+  justify-content: center; /* Centrado de los enlaces */
+  flex-wrap: nowrap; /* Evita que los enlaces se rompan */
 }
 
 .nav-links li a {
@@ -42,6 +44,9 @@ html, body {
   text-decoration: none;
   font-weight: bold;
   transition: color .2s;
+  font-size: 1.1rem;
+  padding: 6px 12px;
+  border-radius: 6px;
 }
 
 .nav-links li a:hover {
@@ -97,35 +102,6 @@ html, body {
   letter-spacing: 2px;
 }
 
-/* GO MOVIES BUTTON */
-.go-movies-container {
-  margin-top: 20px; /* Separación del contenido superior */
-  display: flex;
-  justify-content: center; /* Centra el botón */
-}
-
-.go-movies {
-  background: linear-gradient(90deg, #008cff 0%, #000 100%);
-  color: #fff;
-  border: none;
-  padding: 12px 30px; /* Ajustamos el padding para hacerlo más pequeño pero controlado */
-  font-weight: bold;
-  font-size: 1rem; /* Ajustamos el tamaño de la fuente */
-  border-radius: 25px; /* Borde más redondeado pero pequeño */
-  cursor: pointer;
-  transition: background .3s, transform .2s;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-  margin: 0; /* Aseguramos que no haya espacio extra alrededor del botón */
-}
-
-.go-movies:hover {
-  background: linear-gradient(90deg, #000 0%, #008cff 100%);
-  transform: scale(1.05);
-}
-
 .welcome p {
   color: #f1f1f1;
   font-size: 1.2rem;
@@ -176,13 +152,13 @@ html, body {
 .movie-images {
   display: flex;
   justify-content: center;
-  gap: 80px;
+  gap: 20px;
   margin-top: 20px;
 }
 
 .movie-images img {
-  width: 300px;
-  height: 450px;
+  width: 150px;
+  height: 220px;
   border-radius: 10px;
   object-fit: cover;
   cursor: pointer;
@@ -193,6 +169,21 @@ html, body {
   transform: scale(1.05);
 }
 
+.go-movies {
+  background: linear-gradient(90deg, #008cff 0%, #000 100%);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background .3s, transform .2s;
+}
+
+.go-movies:hover {
+  background: linear-gradient(90deg, #000 0%, #008cff 100%);
+  transform: scale(1.05);
+}
 
 /* MINI-CALENDAR DE ESTRENOS */
 .release-calendar {
@@ -305,7 +296,15 @@ html, body {
 
   .navbar .nav-links {
     flex-direction: column;
-    gap: 40px;
+    gap: 15px; /* Aumentamos el espaciado entre los enlaces */
     text-align: center;
+  }
+
+  .navbar .logo {
+    margin-bottom: 15px;
+  }
+
+  .navbar .user-info {
+    margin-top: 10px;
   }
 }

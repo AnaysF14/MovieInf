@@ -34,11 +34,13 @@ const Comunidad = () => {
   // carga películas y todos los comentarios
   useEffect(() => {
     fetchAllMovies().then(setMovies).catch(console.error);
-    fetch(`${API}/comments`)
-      .then((res) => res.json())
-      .then(setComments)
-      .catch(console.error);
-  }, []);
+    if (selectedMovie) {
+      fetch(`${API}/comments/${selectedMovie.id}`)
+        .then((res) => res.json())
+        .then(setComments)
+        .catch(console.error);
+    }
+  }, [selectedMovie]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -159,20 +161,14 @@ const Comunidad = () => {
           {movies.map((m) => (
             <div
               key={m.id}
-              className={`movie-thumb ${
-                selectedMovie?.id === m.id ? "selected" : ""
-              }`}
+              className={`movie-thumb ${selectedMovie?.id === m.id ? "selected" : ""}`}
               onClick={async () => {
                 const full = await fetchMovieDetails(m.id);
                 setSelectedMovie(full);
               }}
             >
               <img
-                src={
-                  m.poster_path
-                    ? `https://image.tmdb.org/t/p/w200/${m.poster_path}`
-                    : "/placeholder.png"
-                }
+                src={m.poster_path ? `https://image.tmdb.org/t/p/w200/${m.poster_path}` : "/placeholder.png"}
                 alt={m.title}
               />
               <p>{m.title}</p>
@@ -193,25 +189,16 @@ const Comunidad = () => {
                     <div key={c.id} className="comment-card">
                       <img
                         className="comment-movie-poster"
-                        src={
-                          movie.poster_path
-                            ? `https://image.tmdb.org/t/p/w92/${movie.poster_path}`
-                            : "/placeholder.png"
-                        }
+                        src={movie.poster_path ? `https://image.tmdb.org/t/p/w92/${movie.poster_path}` : "/placeholder.png"}
                         alt={movie.title}
                       />
                       <div className="comment-content">
                         <div className="comment-header">
                           <span className="username">{c.user}</span>
-                          <span className="movie-title">
-                            {movie.title || "Película"}
-                          </span>
+                          <span className="movie-title">{movie.title || "Película"}</span>
                           <div className="rating">
                             {[1, 2, 3, 4, 5].map((i) => (
-                              <FaStar
-                                key={i}
-                                className={i <= c.rating ? "star selected" : "star"}
-                              />
+                              <FaStar key={i} className={i <= c.rating ? "star selected" : "star"} />
                             ))}
                           </div>
                         </div>
@@ -232,11 +219,7 @@ const Comunidad = () => {
             <h3>Comenta en {selectedMovie.title}</h3>
             <img
               className="movie-poster"
-              src={
-                selectedMovie.poster_path
-                  ? `https://image.tmdb.org/t/p/w300/${selectedMovie.poster_path}`
-                  : "/placeholder.png"
-              }
+              src={selectedMovie.poster_path ? `https://image.tmdb.org/t/p/w300/${selectedMovie.poster_path}` : "/placeholder.png"}
               alt={selectedMovie.title}
             />
 
@@ -244,11 +227,7 @@ const Comunidad = () => {
               <form className="comment-form" onSubmit={handleSubmit}>
                 <div className="rating-input">
                   {[1, 2, 3, 4, 5].map((st) => (
-                    <FaStar
-                      key={st}
-                      className={st <= newRating ? "star selected" : "star"}
-                      onClick={() => setNewRating(st)}
-                    />
+                    <FaStar key={st} className={st <= newRating ? "star selected" : "star"} onClick={() => setNewRating(st)} />
                   ))}
                 </div>
                 <textarea
@@ -259,9 +238,7 @@ const Comunidad = () => {
                 <button type="submit">Enviar</button>
               </form>
             ) : (
-              <p className="login-msg">
-                🔒 Debes iniciar sesión para dejar un comentario.
-              </p>
+              <p className="login-msg">🔒 Debes iniciar sesión para dejar un comentario.</p>
             )}
 
             <div className="comments-list">
@@ -272,10 +249,7 @@ const Comunidad = () => {
                       <span className="username">{c.user}</span>
                       <div className="rating">
                         {[1, 2, 3, 4, 5].map((i) => (
-                          <FaStar
-                            key={i}
-                            className={i <= c.rating ? "star selected" : "star"}
-                          />
+                          <FaStar key={i} className={i <= c.rating ? "star selected" : "star"} />
                         ))}
                       </div>
                     </div>
@@ -283,9 +257,7 @@ const Comunidad = () => {
                   </div>
                 ))
               ) : (
-                <p className="no-comments">
-                  Sé el primero en comentar esta película.
-                </p>
+                <p className="no-comments">Sé el primero en comentar esta película.</p>
               )}
             </div>
           </section>
