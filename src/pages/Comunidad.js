@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { fetchAllMovies, fetchMovieDetails } from "../api/PeliculasAPI";
 import "./Comunidad.css";
 
-
 const Comunidad = () => {
   const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [comments, setComments] = useState([]); // Estado para comentarios
 
   const username = localStorage.getItem("username") || "";
   const token = localStorage.getItem("token");
@@ -28,6 +28,15 @@ const Comunidad = () => {
   useEffect(() => {
     fetchAllMovies().then(setMovies).catch(console.error);
   }, []);
+
+  // Cargar comentarios cuando se selecciona una película
+  useEffect(() => {
+    if (selectedMovie) {
+      fetchMovieDetails(selectedMovie.id)
+        .then((movie) => setComments(movie.comments || []))
+        .catch(console.error);
+    }
+  }, [selectedMovie]);
 
   return (
     <div className="comunidad-container">
@@ -89,10 +98,7 @@ const Comunidad = () => {
             <div
               key={m.id}
               className={`movie-thumb ${selectedMovie?.id === m.id ? "selected" : ""}`}
-              onClick={async () => {
-                const full = await fetchMovieDetails(m.id);
-                setSelectedMovie(full);
-              }}
+              onClick={() => setSelectedMovie(m)}
             >
               <img
                 src={m.poster_path ? `https://image.tmdb.org/t/p/w200/${m.poster_path}` : "/placeholder.png"}
@@ -103,6 +109,29 @@ const Comunidad = () => {
           ))}
         </div>
 
+        {/* Comentarios */}
+        <div className="movie-comments-section">
+          <h3>Comentarios de la Película</h3>
+          <div className="comments-list">
+            {comments.length === 0 ? (
+              <p className="no-comments">No hay comentarios todavía.</p>
+            ) : (
+              comments.map((comment, idx) => (
+                <div key={idx} className="comment-card">
+                  <div className="comment-header">
+                    <img
+                      src={comment.userImage || "/default-avatar.png"}
+                      alt="User Avatar"
+                      className="comment-user-avatar"
+                    />
+                    <span className="username">{comment.username}</span>
+                  </div>
+                  <p className="comment-text">{comment.text}</p>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
       </main>
     </div>
   );
