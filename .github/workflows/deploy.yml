@@ -40,7 +40,7 @@ jobs:
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20
         with:
-          vercel-token: ${{ secrets.Vqbt3Dhy5hjfVKhvSLieGxFW }}
-          vercel-org-id: ${{ secrets.team_BI5T0ediMQ6dV4AOsbAvFqYz }}
-          vercel-project-id: ${{ secrets.movieinf }}
-          working-directory: movieinf/backend   # Ajusta según tu estructura
+          vercel_token: ${{ secrets.Vqbt3Dhy5hjfVKhvSLieGxFW }}
+          vercel_org_id: ${{ secrets.team_BI5T0ediMQ6dV4AOsbAvFqYz }}
+          vercel-project_id: ${{ secrets.movieinf }}
+          working_directory: movieinf/backend   # Ajusta según tu estructura
