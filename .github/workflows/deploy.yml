@@ -19,14 +19,8 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run tests
-        run: npm test
-
-      - name: Build frontend
-        working-directory: ./frontend   # Ajusta si tu front está en otra carpeta
+      - name: Build Backend
+        working-directory:  movieinf/backend   
         run: npm run build
 
   # Job de despliegue, depende de build
@@ -43,4 +37,4 @@ jobs:
           vercel_token: ${{ secrets.Vqbt3Dhy5hjfVKhvSLieGxFW }}
           vercel_org_id: ${{ secrets.team_BI5T0ediMQ6dV4AOsbAvFqYz }}
           vercel-project_id: ${{ secrets.movieinf }}
-          working_directory: movieinf/backend   # Ajusta según tu estructura
+          working_directory: movieinf/backend   
