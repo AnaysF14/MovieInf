@@ -1,0 +1,46 @@
+name: CI/CD
+
+# Se dispara en cada push a main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # Job de construcción y pruebas
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build frontend
+        working-directory: ./frontend   # Ajusta si tu front está en otra carpeta
+        run: npm run build
+
+  # Job de despliegue, depende de build
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.Vqbt3Dhy5hjfVKhvSLieGxFW }}
+          vercel-org-id: ${{ secrets.team_BI5T0ediMQ6dV4AOsbAvFqYz }}
+          vercel-project-id: ${{ secrets.movieinf }}
+          working-directory: movieinf/backend   # Ajusta según tu estructura
