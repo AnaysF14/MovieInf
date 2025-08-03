@@ -19,22 +19,3 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Build Backend
-        working-directory:  movieinf/backend   
-        run: npm run build
-
-  # Job de despliegue, depende de build
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel_token: ${{ secrets.Vqbt3Dhy5hjfVKhvSLieGxFW }}
-          vercel_org_id: ${{ secrets.team_BI5T0ediMQ6dV4AOsbAvFqYz }}
-          vercel-project_id: ${{ secrets.movieinf }}
-          working_directory: movieinf/backend   
